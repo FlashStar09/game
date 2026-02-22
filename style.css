@@ -1,40 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    min-height: 100vh;
     text-align: center;
-    background: #222;
     color: white;
+    overflow-x: hidden;
 }
 
 h1 {
-    margin-top: 20px;
+    margin-top: 30px;
+    font-size: 2.5rem;
+    animation: fadeDown 1s ease;
+}
+
+.menu {
+    margin: 30px 0;
 }
 
 .menu button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     margin: 10px;
+    border: none;
+    border-radius: 30px;
     cursor: pointer;
+    font-size: 16px;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.menu button:hover {
+    background: white;
+    color: #1f1c2c;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
 .game {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
     display: none;
-    margin-top: 20px;
+}
+
+.game.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(3, 100px);
-    gap: 5px;
+    gap: 10px;
     justify-content: center;
-    margin: 20px auto;
+    margin: 30px auto;
 }
 
 .cell {
     width: 100px;
     height: 100px;
-    background: #444;
-    font-size: 2em;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    font-size: 2.5em;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cell:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    background: #ffffff;
+    color: #1f1c2c;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin: 10px;
+    text-align: center;
+}
+
+/* Animations */
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
