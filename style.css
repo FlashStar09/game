@@ -6,113 +6,111 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    min-height: 100vh;
-    text-align: center;
+    background: linear-gradient(135deg, #141e30, #243b55);
     color: white;
+    text-align: center;
+    min-height: 100vh;
 }
 
 h1 {
-    margin-top: 20px;
+    margin: 20px;
+    font-size: 2rem;
 }
 
 .scoreboard {
-    margin-top: 20px;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
 }
 
 .menu {
-    margin: 25px 0;
+    margin: 20px;
 }
 
 .menu button {
     padding: 12px 20px;
     margin: 8px;
     border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    background: rgba(255,255,255,0.15);
+    border-radius: 25px;
+    background: #00c6ff;
     color: white;
-    backdrop-filter: blur(10px);
-    transition: 0.3s ease;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .menu button:hover {
-    background: white;
-    color: #1f1c2c;
-    transform: translateY(-5px);
+    background: #0072ff;
+    transform: scale(1.05);
 }
 
 .game {
     display: none;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease;
+    margin-top: 20px;
 }
 
 .game.active {
     display: block;
-    opacity: 1;
-    transform: translateY(0);
 }
+
+/* Tic Tac Toe */
 
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 8px;
+    width: 90%;
     max-width: 320px;
     margin: 20px auto;
 }
 
 .cell {
     aspect-ratio: 1/1;
-    background: rgba(255,255,255,0.1);
-    border-radius: 15px;
+    background: rgba(255,255,255,0.2);
     font-size: 2rem;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    border-radius: 12px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.2s;
 }
 
 .cell:hover {
-    background: rgba(255,255,255,0.3);
-    transform: scale(1.1);
+    background: rgba(255,255,255,0.4);
 }
 
-button {
-    padding: 10px 18px;
-    margin: 8px;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    transform: scale(1.05);
-}
-
-input {
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    margin: 10px;
-    text-align: center;
-}
+/* Snake */
 
 canvas {
-    background: #111;
-    margin-top: 20px;
-    max-width: 90%;
+    background: #000;
+    width: 90%;
+    max-width: 350px;
+    height: 350px;
+    border-radius: 12px;
 }
+
+.controls {
+    margin-top: 15px;
+}
+
+.controls button {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 8px;
+    border: none;
+    background: #00c6ff;
+    color: white;
+    font-size: 18px;
+}
+
+/* Mobile */
 
 @media (max-width: 600px) {
     h1 {
-        font-size: 1.8rem;
-    }
-
-    .menu button {
-        width: 90%;
+        font-size: 1.5rem;
     }
 }
