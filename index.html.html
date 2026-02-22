@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Games Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>🎮 Mini Games Hub</h1>
+
+    <div class="menu">
+        <button onclick="showGame('tic')">Tic Tac Toe</button>
+        <button onclick="showGame('rps')">Rock Paper Scissors</button>
+        <button onclick="showGame('guess')">Number Guessing</button>
+    </div>
+
+    <!-- Tic Tac Toe -->
+    <div id="tic" class="game">
+        <h2>Tic Tac Toe</h2>
+        <div class="board" id="board"></div>
+        <p id="ticStatus"></p>
+        <button onclick="resetTic()">Restart</button>
+    </div>
+
+    <!-- Rock Paper Scissors -->
+    <div id="rps" class="game">
+        <h2>Rock Paper Scissors</h2>
+        <button onclick="playRPS('Rock')">Rock</button>
+        <button onclick="playRPS('Paper')">Paper</button>
+        <button onclick="playRPS('Scissors')">Scissors</button>
+        <p id="rpsResult"></p>
+    </div>
+
+    <!-- Number Guessing -->
+    <div id="guess" class="game">
+        <h2>Number Guessing Game</h2>
+        <input type="number" id="guessInput" placeholder="Enter 1-100">
+        <button onclick="checkGuess()">Guess</button>
+        <p id="guessResult"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
