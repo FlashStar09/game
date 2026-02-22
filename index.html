@@ -3,43 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Mini Games Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>🎮 Mini Games Hub</h1>
+<h1>🎮 Mini Games Hub</h1>
 
-    <div class="menu">
-        <button onclick="showGame('tic')">Tic Tac Toe</button>
-        <button onclick="showGame('rps')">Rock Paper Scissors</button>
-        <button onclick="showGame('guess')">Number Guessing</button>
-    </div>
+<div class="scoreboard">
+    <h3>🏆 Scoreboard</h3>
+    <p>Tic Tac Toe - X: <span id="scoreX">0</span> | O: <span id="scoreO">0</span></p>
+    <p>RPS - You: <span id="scoreYou">0</span> | Computer: <span id="scoreComp">0</span></p>
+    <p>Snake High Score: <span id="snakeHigh">0</span></p>
+</div>
 
-    <!-- Tic Tac Toe -->
-    <div id="tic" class="game">
-        <h2>Tic Tac Toe</h2>
-        <div class="board" id="board"></div>
-        <p id="ticStatus"></p>
-        <button onclick="resetTic()">Restart</button>
-    </div>
+<div class="menu">
+    <button onclick="showGame('tic')">Tic Tac Toe</button>
+    <button onclick="showGame('rps')">Rock Paper Scissors</button>
+    <button onclick="showGame('guess')">Number Guessing</button>
+    <button onclick="showGame('snake')">Snake</button>
+</div>
 
-    <!-- Rock Paper Scissors -->
-    <div id="rps" class="game">
-        <h2>Rock Paper Scissors</h2>
-        <button onclick="playRPS('Rock')">Rock</button>
-        <button onclick="playRPS('Paper')">Paper</button>
-        <button onclick="playRPS('Scissors')">Scissors</button>
-        <p id="rpsResult"></p>
-    </div>
+<!-- Tic Tac Toe -->
+<div id="tic" class="game">
+    <h2>Tic Tac Toe</h2>
+    <div class="board" id="board"></div>
+    <p id="ticStatus"></p>
+    <button onclick="resetTic()">Restart</button>
+</div>
 
-    <!-- Number Guessing -->
-    <div id="guess" class="game">
-        <h2>Number Guessing Game</h2>
-        <input type="number" id="guessInput" placeholder="Enter 1-100">
-        <button onclick="checkGuess()">Guess</button>
-        <p id="guessResult"></p>
-    </div>
+<!-- RPS -->
+<div id="rps" class="game">
+    <h2>Rock Paper Scissors</h2>
+    <button onclick="playRPS('Rock')">Rock</button>
+    <button onclick="playRPS('Paper')">Paper</button>
+    <button onclick="playRPS('Scissors')">Scissors</button>
+    <p id="rpsResult"></p>
+</div>
 
-    <script src="script.js"></script>
+<!-- Guess -->
+<div id="guess" class="game">
+    <h2>Number Guessing</h2>
+    <input type="number" id="guessInput" placeholder="Enter 1-100">
+    <button onclick="checkGuess()">Guess</button>
+    <p id="guessResult"></p>
+</div>
+
+<!-- Snake -->
+<div id="snake" class="game">
+    <h2>🐍 Snake Game</h2>
+    <canvas id="snakeCanvas" width="400" height="400"></canvas>
+    <p>Score: <span id="snakeScore">0</span></p>
+    <button onclick="startSnake()">Start Game</button>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
