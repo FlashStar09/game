@@ -1,52 +1,43 @@
-// =========================
-// Smooth Game Switching
-// =========================
+// Smooth switching
 function showGame(id) {
-    document.querySelectorAll(".game").forEach(g => {
-        g.classList.remove("active");
-        g.style.display = "none";
-    });
-
-    const selected = document.getElementById(id);
-    selected.style.display = "block";
-
-    setTimeout(() => {
-        selected.classList.add("active");
-    }, 50);
+    document.querySelectorAll(".game").forEach(g => g.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
 }
 
-// =========================
-// Scoreboard
-// =========================
-let scoreX = 0, scoreO = 0;
-let scoreYou = 0, scoreComp = 0;
-let snakeHighScore = 0;
+/* =========================
+   TIC TAC TOE (2 PLAYERS)
+========================= */
 
-// =========================
-// Tic Tac Toe
-// =========================
-let currentPlayer = "X";
 let boardState = ["","","","","","","","",""];
+let currentPlayer = "X";
+let scoreX = 0, scoreO = 0;
 let gameActive = true;
+
 const board = document.getElementById("board");
 
 function createBoard() {
     board.innerHTML = "";
-    boardState.forEach((cell, index) => {
+    boardState.forEach((cell, i) => {
         const div = document.createElement("div");
         div.classList.add("cell");
         div.textContent = cell;
-        div.onclick = () => makeMove(index);
+        div.onclick = () => makeMove(i);
         board.appendChild(div);
     });
 }
+createBoard();
 
 function makeMove(i) {
     if(boardState[i] || !gameActive) return;
+
     boardState[i] = currentPlayer;
-    checkWinner();
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
     createBoard();
+
+    if(checkWinner()) return;
+
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    document.getElementById("ticStatus").textContent =
+        `Player ${currentPlayer === "X" ? "1 (X)" : "2 (O)"} Turn`;
 }
 
 function checkWinner() {
@@ -59,126 +50,91 @@ function checkWinner() {
     for(let c of combos){
         const [a,b,d] = c;
         if(boardState[a] && boardState[a]===boardState[b] && boardState[a]===boardState[d]){
-            document.getElementById("ticStatus").textContent = boardState[a] + " Wins!";
-            if(boardState[a]==="X"){
+            document.getElementById("ticStatus").textContent =
+                `Player ${boardState[a] === "X" ? "1" : "2"} Wins!`;
+
+            if(boardState[a] === "X"){
                 scoreX++;
-                document.getElementById("scoreX").textContent=scoreX;
+                document.getElementById("scoreX").textContent = scoreX;
             } else {
                 scoreO++;
-                document.getElementById("scoreO").textContent=scoreO;
+                document.getElementById("scoreO").textContent = scoreO;
             }
-            gameActive=false;
+
+            gameActive = false;
+            return true;
         }
     }
 
-    if(!boardState.includes("") && gameActive){
-        document.getElementById("ticStatus").textContent="Draw!";
-        gameActive=false;
+    if(!boardState.includes("")){
+        document.getElementById("ticStatus").textContent = "Draw!";
+        gameActive = false;
+        return true;
     }
+    return false;
 }
 
 function resetTic(){
-    boardState=["","","","","","","","",""];
-    gameActive=true;
-    document.getElementById("ticStatus").textContent="";
+    boardState = ["","","","","","","","",""];
+    currentPlayer = "X";
+    gameActive = true;
+    document.getElementById("ticStatus").textContent = "";
     createBoard();
 }
-createBoard();
 
-// =========================
-// Rock Paper Scissors
-// =========================
-function playRPS(choice){
-    const options=["Rock","Paper","Scissors"];
-    const comp=options[Math.floor(Math.random()*3)];
-    let result="";
+/* =========================
+   SNAKE GAME (FIXED)
+========================= */
 
-    if(choice===comp) result="Tie!";
-    else if(
-        (choice==="Rock"&&comp==="Scissors")||
-        (choice==="Paper"&&comp==="Rock")||
-        (choice==="Scissors"&&comp==="Paper")
-    ){
-        result="You Win!";
-        scoreYou++;
-        document.getElementById("scoreYou").textContent=scoreYou;
-    } else {
-        result="Computer Wins!";
-        scoreComp++;
-        document.getElementById("scoreComp").textContent=scoreComp;
-    }
+const canvas = document.getElementById("snakeCanvas");
+const ctx = canvas.getContext("2d");
 
-    document.getElementById("rpsResult").textContent=
-        `You: ${choice} | Computer: ${comp} → ${result}`;
-}
+canvas.width = 350;
+canvas.height = 350;
 
-// =========================
-// Number Guessing
-// =========================
-let randomNumber=Math.floor(Math.random()*100)+1;
-
-function checkGuess(){
-    const guess=Number(document.getElementById("guessInput").value);
-    const result=document.getElementById("guessResult");
-
-    if(guess===randomNumber){
-        result.textContent="Correct! New number generated.";
-        randomNumber=Math.floor(Math.random()*100)+1;
-    } else if(guess<randomNumber){
-        result.textContent="Too Low!";
-    } else {
-        result.textContent="Too High!";
-    }
-}
-
-// =========================
-// Snake Game
-// =========================
-const canvas=document.getElementById("snakeCanvas");
-const ctx=canvas.getContext("2d");
-
-let snake, food, dx, dy, snakeScore, snakeGame;
+let snake, food, dx, dy, score, highScore = 0;
+let gameInterval;
 
 function startSnake(){
-    snake=[{x:200,y:200}];
-    dx=20; dy=0;
-    snakeScore=0;
-    document.getElementById("snakeScore").textContent=0;
+    snake = [{x: 160, y:160}];
+    dx = 20;
+    dy = 0;
+    score = 0;
+    document.getElementById("snakeScore").textContent = 0;
 
-    food={
-        x:Math.floor(Math.random()*20)*20,
-        y:Math.floor(Math.random()*20)*20
+    food = randomFood();
+
+    clearInterval(gameInterval);
+    gameInterval = setInterval(drawSnake, 120);
+}
+
+function randomFood(){
+    return {
+        x: Math.floor(Math.random() * 17) * 20,
+        y: Math.floor(Math.random() * 17) * 20
     };
-
-    clearInterval(snakeGame);
-    snakeGame=setInterval(drawSnake,120);
 }
 
 function drawSnake(){
-    ctx.fillStyle="#111";
+    ctx.fillStyle = "black";
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    ctx.fillStyle="lime";
-    snake.forEach(p=>ctx.fillRect(p.x,p.y,20,20));
+    ctx.fillStyle = "lime";
+    snake.forEach(p => ctx.fillRect(p.x,p.y,18,18));
 
-    ctx.fillStyle="red";
-    ctx.fillRect(food.x,food.y,20,20);
+    ctx.fillStyle = "red";
+    ctx.fillRect(food.x,food.y,18,18);
 
-    const head={x:snake[0].x+dx,y:snake[0].y+dy};
+    const head = {x: snake[0].x + dx, y: snake[0].y + dy};
 
-    if(head.x===food.x && head.y===food.y){
-        snakeScore++;
-        document.getElementById("snakeScore").textContent=snakeScore;
-
-        if(snakeScore>snakeHighScore){
-            snakeHighScore=snakeScore;
-            document.getElementById("snakeHigh").textContent=snakeHighScore;
+    if(head.x === food.x && head.y === food.y){
+        score++;
+        document.getElementById("snakeScore").textContent = score;
+        if(score > highScore){
+            highScore = score;
+            document.getElementById("snakeHigh").textContent = highScore;
         }
-
-        food={
-            x:Math.floor(Math.random()*20)*20,
-            y:Math.floor(Math.random()*20)*20
-        };
+        food = randomFood();
     } else {
         snake.pop();
     }
@@ -186,18 +142,27 @@ function drawSnake(){
     snake.unshift(head);
 
     if(
-        head.x<0 || head.x>=canvas.width ||
-        head.y<0 || head.y>=canvas.height ||
-        snake.slice(1).some(p=>p.x===head.x && p.y===head.y)
+        head.x < 0 || head.y < 0 ||
+        head.x >= canvas.width || head.y >= canvas.height ||
+        snake.slice(1).some(p => p.x === head.x && p.y === head.y)
     ){
-        clearInterval(snakeGame);
+        clearInterval(gameInterval);
         alert("Game Over!");
     }
 }
 
-document.addEventListener("keydown",e=>{
-    if(e.key==="ArrowUp"&&dy===0){dx=0;dy=-20;}
-    if(e.key==="ArrowDown"&&dy===0){dx=0;dy=20;}
-    if(e.key==="ArrowLeft"&&dx===0){dx=-20;dy=0;}
-    if(e.key==="ArrowRight"&&dx===0){dx=20;dy=0;}
+// Keyboard controls
+document.addEventListener("keydown", e => {
+    if(e.key === "ArrowUp" && dy === 0){ dx = 0; dy = -20; }
+    if(e.key === "ArrowDown" && dy === 0){ dx = 0; dy = 20; }
+    if(e.key === "ArrowLeft" && dx === 0){ dx = -20; dy = 0; }
+    if(e.key === "ArrowRight" && dx === 0){ dx = 20; dy = 0; }
 });
+
+// Mobile controls
+function changeDirection(dir){
+    if(dir === "up" && dy === 0){ dx = 0; dy = -20; }
+    if(dir === "down" && dy === 0){ dx = 0; dy = 20; }
+    if(dir === "left" && dx === 0){ dx = -20; dy = 0; }
+    if(dir === "right" && dx === 0){ dx = 20; dy = 0; }
+}
