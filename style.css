@@ -10,44 +10,43 @@ body {
     min-height: 100vh;
     text-align: center;
     color: white;
-    overflow-x: hidden;
 }
 
 h1 {
-    margin-top: 30px;
-    font-size: 2.5rem;
-    animation: fadeDown 1s ease;
+    margin-top: 20px;
+}
+
+.scoreboard {
+    margin-top: 20px;
 }
 
 .menu {
-    margin: 30px 0;
+    margin: 25px 0;
 }
 
 .menu button {
-    padding: 12px 25px;
-    margin: 10px;
+    padding: 12px 20px;
+    margin: 8px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 16px;
     background: rgba(255,255,255,0.15);
     color: white;
     backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    transition: 0.3s ease;
 }
 
 .menu button:hover {
     background: white;
     color: #1f1c2c;
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
 .game {
+    display: none;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.5s ease;
-    display: none;
 }
 
 .game.active {
@@ -58,23 +57,22 @@ h1 {
 
 .board {
     display: grid;
-    grid-template-columns: repeat(3, 100px);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    justify-content: center;
-    margin: 30px auto;
+    max-width: 320px;
+    margin: 20px auto;
 }
 
 .cell {
-    width: 100px;
-    height: 100px;
+    aspect-ratio: 1/1;
     background: rgba(255,255,255,0.1);
     border-radius: 15px;
-    font-size: 2.5em;
+    font-size: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
 .cell:hover {
@@ -83,13 +81,11 @@ h1 {
 }
 
 button {
-    padding: 10px 20px;
-    margin: 10px;
+    padding: 10px 18px;
+    margin: 8px;
     border-radius: 20px;
     border: none;
     cursor: pointer;
-    background: #ffffff;
-    color: #1f1c2c;
     transition: 0.3s;
 }
 
@@ -105,15 +101,18 @@ input {
     text-align: center;
 }
 
-/* Animations */
+canvas {
+    background: #111;
+    margin-top: 20px;
+    max-width: 90%;
+}
 
-@keyframes fadeDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.8rem;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .menu button {
+        width: 90%;
     }
 }
