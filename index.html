@@ -1,59 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Mini Games Hub</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Mini Games Hub</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🎮 Mini Games Hub</h1>
+<h1>🎮 Ultimate Mini Games Hub</h1>
 
 <div class="scoreboard">
     <h3>🏆 Scoreboard</h3>
-    <p>Tic Tac Toe - X: <span id="scoreX">0</span> | O: <span id="scoreO">0</span></p>
-    <p>RPS - You: <span id="scoreYou">0</span> | Computer: <span id="scoreComp">0</span></p>
+    <p>Tic Tac Toe → Player 1 (X): <span id="scoreX">0</span> | Player 2 (O): <span id="scoreO">0</span></p>
     <p>Snake High Score: <span id="snakeHigh">0</span></p>
 </div>
 
 <div class="menu">
     <button onclick="showGame('tic')">Tic Tac Toe</button>
-    <button onclick="showGame('rps')">Rock Paper Scissors</button>
-    <button onclick="showGame('guess')">Number Guessing</button>
     <button onclick="showGame('snake')">Snake</button>
 </div>
 
 <!-- Tic Tac Toe -->
 <div id="tic" class="game">
-    <h2>Tic Tac Toe</h2>
+    <h2>👥 Tic Tac Toe (2 Players)</h2>
     <div class="board" id="board"></div>
     <p id="ticStatus"></p>
     <button onclick="resetTic()">Restart</button>
 </div>
 
-<!-- RPS -->
-<div id="rps" class="game">
-    <h2>Rock Paper Scissors</h2>
-    <button onclick="playRPS('Rock')">Rock</button>
-    <button onclick="playRPS('Paper')">Paper</button>
-    <button onclick="playRPS('Scissors')">Scissors</button>
-    <p id="rpsResult"></p>
-</div>
-
-<!-- Guess -->
-<div id="guess" class="game">
-    <h2>Number Guessing</h2>
-    <input type="number" id="guessInput" placeholder="Enter 1-100">
-    <button onclick="checkGuess()">Guess</button>
-    <p id="guessResult"></p>
-</div>
-
 <!-- Snake -->
 <div id="snake" class="game">
     <h2>🐍 Snake Game</h2>
-    <canvas id="snakeCanvas" width="400" height="400"></canvas>
+    <canvas id="snakeCanvas"></canvas>
     <p>Score: <span id="snakeScore">0</span></p>
+
+    <!-- Mobile Controls -->
+    <div class="controls">
+        <button onclick="changeDirection('up')">⬆</button>
+        <div>
+            <button onclick="changeDirection('left')">⬅</button>
+            <button onclick="changeDirection('down')">⬇</button>
+            <button onclick="changeDirection('right')">➡</button>
+        </div>
+    </div>
+
     <button onclick="startSnake()">Start Game</button>
 </div>
 
